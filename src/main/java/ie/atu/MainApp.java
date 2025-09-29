@@ -6,20 +6,46 @@ public class MainApp {
 
     public static void main(String[] args) {
 
-        UserInput userInput = getUserInput();
+        while(true){
+            UserInput userInput = getUserInput();
 
-        //perform arithmatics
-        Calculator calculator = new Calculator();
-        double result = switch (userInput.operation) {
-            case "add" -> calculator.add(userInput.firstNum, userInput.secondNum);
-            case "subtract" -> calculator.sub(userInput.firstNum, userInput.secondNum);
-            case "multiply" -> calculator.mul(userInput.firstNum, userInput.secondNum);
-            case "divide" -> calculator.div(userInput.firstNum, userInput.secondNum);
-            default -> throw new IllegalArgumentException("Invalid operation");
+            //perform arithmatics
+            Calculator calculator = new Calculator();
+            boolean zeroError = false;
+            boolean quit  = false;
+            double result = switch (userInput.operation) {
+                case "add" -> calculator.add(userInput.firstNum, userInput.secondNum);
+                case "subtract" -> calculator.sub(userInput.firstNum, userInput.secondNum);
+                case "multiply" -> calculator.mul(userInput.firstNum, userInput.secondNum);
+                case "divide" -> {
+                    if (userInput.secondNum == 0) {
+                        zeroError = true;
+                        yield 0;
+                    }
+                    yield calculator.div(userInput.firstNum, userInput.secondNum);
+                }
+                case "quit" -> {
+                    quit = true;
+                    yield 0;
+                }
+                default -> throw new IllegalArgumentException("Invalid operation");
 
-        };
-        // print result
-        System.out.println("The result is: " + result);
+            };
+
+            if (quit) {
+                break;
+            }
+            // print result
+            if (zeroError){
+                System.out.println("Cannot divide by 0");
+                zeroError = false;
+
+            } else {
+                System.out.println("The result is: " + result);
+            }
+        }
+
+
 
     }
 
@@ -28,12 +54,16 @@ public class MainApp {
     public static UserInput getUserInput() {
         //get user input
         Scanner sc = new Scanner(System.in);
-        System.out.print("Choose the operation (add, subtract, multiply, divide): ");
-        String operation = sc.nextLine();
-        while (!operation.equals("add") && !operation.equals("subtract") && !operation.equals("multiply") && !operation.equals("divide")) {
+        System.out.print("Choose the operation (add, subtract, multiply, divide, quit): ");
+        String operation = sc.nextLine().trim();
+        while (!operation.equals("add") && !operation.equals("subtract") && !operation.equals("multiply") && !operation.equals("divide")  && !operation.equals("quit")) {
             System.out.print("Invalid input, ");
             System.out.print("choose the operation (add, subtract, multiply, divide): ");
             operation = sc.nextLine();
+        }
+
+        if (operation.equals("quit")) {
+            return new UserInput(operation, 0, 0);
         }
 
         System.out.println("Insert first number:");
