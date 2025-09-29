@@ -15,4 +15,6 @@ public class Calculator {
 
     public int div(int firstNum, int secondNum) {return firstNum / secondNum;}
 
+    public int mod(int firstNum, int secondNum) {return firstNum % secondNum;}
+
 }

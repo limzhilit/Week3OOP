@@ -9,22 +9,23 @@ public class MainApp {
         while(true){
             UserInput userInput = getUserInput();
 
-            //perform arithmatics
+            //perform arithmetic
             Calculator calculator = new Calculator();
             boolean zeroError = false;
             boolean quit  = false;
             double result = switch (userInput.operation) {
-                case "add" -> calculator.add(userInput.firstNum, userInput.secondNum);
-                case "subtract" -> calculator.sub(userInput.firstNum, userInput.secondNum);
-                case "multiply" -> calculator.mul(userInput.firstNum, userInput.secondNum);
-                case "divide" -> {
+                case 1 -> calculator.add(userInput.firstNum, userInput.secondNum);
+                case 2 -> calculator.sub(userInput.firstNum, userInput.secondNum);
+                case 3 -> calculator.mul(userInput.firstNum, userInput.secondNum);
+                case 4 -> {
                     if (userInput.secondNum == 0) {
                         zeroError = true;
                         yield 0;
                     }
                     yield calculator.div(userInput.firstNum, userInput.secondNum);
                 }
-                case "quit" -> {
+                case 5 -> calculator.mod(userInput.firstNum, userInput.secondNum);
+                case 0 -> {
                     quit = true;
                     yield 0;
                 }
@@ -41,7 +42,7 @@ public class MainApp {
                 zeroError = false;
 
             } else {
-                System.out.println("The result is: " + result);
+                System.out.println("The result is: " + result + "\n");
             }
         }
 
@@ -49,20 +50,24 @@ public class MainApp {
 
     }
 
-    public record UserInput(String operation, int firstNum, int secondNum) {}
+    public record UserInput(int operation, int firstNum, int secondNum) {}
 
     public static UserInput getUserInput() {
         //get user input
         Scanner sc = new Scanner(System.in);
-        System.out.print("Choose the operation (add, subtract, multiply, divide, quit): ");
-        String operation = sc.nextLine().trim();
-        while (!operation.equals("add") && !operation.equals("subtract") && !operation.equals("multiply") && !operation.equals("divide")  && !operation.equals("quit")) {
-            System.out.print("Invalid input, ");
-            System.out.print("choose the operation (add, subtract, multiply, divide): ");
-            operation = sc.nextLine();
+        String menu = """
+                (1) add     (2) subtract    (3) multiply
+                (4) divide  (5) modulo      (0) quit
+                Enter the operation (0-5): 
+                """;
+        System.out.print(menu);
+        int operation = sc.nextInt();
+        while (operation > 6 || operation < 0) {
+            System.out.print("Enter operation ");
+            operation = sc.nextInt();
         }
 
-        if (operation.equals("quit")) {
+        if (operation == 0) {
             return new UserInput(operation, 0, 0);
         }
 
