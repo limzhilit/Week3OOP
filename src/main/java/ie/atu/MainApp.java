@@ -12,7 +12,7 @@ public class MainApp {
         Calculator calculator = new Calculator();
         double result = switch (userInput.operation) {
             case "add" -> calculator.add(userInput.firstNum, userInput.secondNum);
-            case "sub" -> calculator.sub(userInput.firstNum, userInput.secondNum);
+            case "subtract" -> calculator.sub(userInput.firstNum, userInput.secondNum);
             default -> throw new IllegalArgumentException("Invalid operation");
 
         };
