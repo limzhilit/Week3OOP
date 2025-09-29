@@ -14,6 +14,7 @@ public class MainApp {
             case "add" -> calculator.add(userInput.firstNum, userInput.secondNum);
             case "subtract" -> calculator.sub(userInput.firstNum, userInput.secondNum);
             case "multiply" -> calculator.mul(userInput.firstNum, userInput.secondNum);
+            case "divide" -> calculator.div(userInput.firstNum, userInput.secondNum);
             default -> throw new IllegalArgumentException("Invalid operation");
 
         };
