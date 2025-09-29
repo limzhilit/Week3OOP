@@ -13,10 +13,6 @@ public class Calculator {
 
     public int mul(int firstNum, int secondNum) {return firstNum * secondNum;}
 
-    public int div(int firstNum, int secondNum) {
-        if (secondNum == 0) {
-            throw new IllegalArgumentException("Division by zero!");
-        }
-        return firstNum / secondNum;}
+    public int div(int firstNum, int secondNum) {return firstNum / secondNum;}
 
 }
