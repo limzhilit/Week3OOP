@@ -13,6 +13,7 @@ public class MainApp {
         double result = switch (userInput.operation) {
             case "add" -> calculator.add(userInput.firstNum, userInput.secondNum);
             case "subtract" -> calculator.sub(userInput.firstNum, userInput.secondNum);
+            case "multiply" -> calculator.mul(userInput.firstNum, userInput.secondNum);
             default -> throw new IllegalArgumentException("Invalid operation");
 
         };
